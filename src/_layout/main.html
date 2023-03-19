@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>~欢迎光临~</title>
+    <title>欢迎光临~</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     {% block meta %}
@@ -23,11 +23,11 @@
 </head>
 
 <body>
-    <div class="body-container">
+    <div class="body-container text-[#2f353e]">
         {% block body %}{% endblock body %}
 
         {% block footer %}
-        
+        <div class="text-sm block-container mt-12 text-gray-500">© 2023, By <a href="https://www.daobox.cn" target="_blank">道盒</a></div>
         {% endblock footer %}
     </div>
     {% block js %}{{ assets(section="main", type="js") }}{% endblock js %}

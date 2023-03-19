@@ -3,12 +3,19 @@
 
 
 {% block body %}
-<div class="block-container">
-  <h1>建站工具</h1>
- 
+{% set site = ds("_layout/source/site_info.toml") %}
+<div class="block-container space-y-8">
+  <h1 class="text-xl font-bold mt-6 my-font-color">
+    <a href="/">{{site.base.name}}</a>
+  </h1>
+  
   {% set cfg = ds("/_layout/source/daobox_cfg.toml") %}
   {% set note = daobox_item(id=__qs.id, config=cfg.daobox) %}
-  <div>{{note.content_html | safe}}</div>
+  <div class="space-y-3">
+    <h2 class="text-4xl font-semibold">{{note.title}}</h2>
+    <div class="text-gray-600">{{note.create_at / 1000 | int | date(format="%Y-%m-%d")}}</div>
+  </div>
+  <div class="yb-content2">{{note.content_html | safe}}</div>
   
 </div>
 {% endblock body %}

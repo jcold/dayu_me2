@@ -3,25 +3,43 @@
 
 
 {% block body %}
-<div class="block-container">
-  <h1>建站工具</h1>
- 
-  {% set page_no =__qs.page | default(value=1) | int %}
-  {% set cfg = ds("/_layout/source/daobox_cfg.toml") %}
-  {% set items = daobox_items(page=page_no, config=cfg.daobox) %}
-  {% for item in items.items %}
-  <li><a href="note.{{item.id}}.html?id={{item.id}}" target="_blank">{{item.title}}</a></li>
-  {% endfor %}
-  
-  {% if page_no == 2 %}
-  <a href="index.html">上一页</a>
-  {% elif page_no > 2 %}
-  <a href="index.p{{page_no-1}}.html?page={{page_no-1}}">上一页</a>
-  {% endif %}
+{% set site = ds("_layout/source/site_info.toml") %}
+<div class="block-container space-y-6">
+    <h1 class="text-4xl font-extrabold mt-6">{{site.base.name}}</h1>
 
-  {% if items.cursor  %}
-    <a href="index.p{{page_no+1}}.html?page={{page_no+1}}">下一页</a>
-  {% endif %}
+    <p class="text-[95%] text-black/70">平庸的互联网从业者，至今碌碌无为，毫无建树，但始终坚信未来可期的大龄码农！<br />
+        联系方式：dayu[at]dayu.me，请注意替换@。</p>
+
+    {% set page_no =__qs.page | default(value=1) | int %}
+    {% set cfg = ds("/_layout/source/daobox_cfg.toml") %}
+    {% set items = daobox_items(page=page_no, config=cfg.daobox) %}
+    {% for item in items.items %}
+    <div class="space-y-2">
+        <h2 class="text-2xl"><a class="text-[#005b99] font-medium" href="note.{{item.id}}.html?id={{item.id}}" target="_blank">{{item.title}}</a></h2>
+        <div class="text-[#2f353e] font-light text-[90%] number">{{item.create_at / 1000 | int | date(format="%Y-%m-%d")}}</div>
+    </div>
+    {% endfor %}
+
+    <div class="space-x-6 flex !mt-10">
+        {% if page_no > 1 %}
+        <div class="flex items-center space-x-1">
+            {% if page_no == 2 %}
+            {{blocks::arrow_left()}}
+            <a href="index.html">上一页</a>
+            {% elif page_no > 2 %}
+            {{blocks::arrow_left()}}
+            <a href="index.p{{page_no-1}}.html?page={{page_no-1}}">上一页</a>
+            {% endif %}
+        </div>
+        {% endif %}
+            
+        {% if items.cursor %}
+        <div class="flex items-center space-x-1">
+            <a href="index.p{{page_no+1}}.html?page={{page_no+1}}">下一页</a>
+            {{blocks::arrow_right()}}
+        </div>
+        {% endif %}
+    </div>
 
 </div>
 {% endblock body %}

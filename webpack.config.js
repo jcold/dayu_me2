@@ -128,7 +128,7 @@ module.exports = {
       '[name]' +
       (config().disableHash ? '' : '.[chunkhash:8]') +
       '.js'
-      : '[name].js', // filename是相对于path路径生成
+      : 'assets/[name].js', // filename是相对于path路径生成
     publicPath: process.env.VUE_APP_CDN_PREFIX,
     assetModuleFilename: 'assets/img/[hash][ext][query]',
   },
@@ -293,7 +293,7 @@ module.exports = {
         '[name]' +
         (config().disableHash ? '' : '.[chunkhash:8]') +
         '.css'
-        : '[name].css', // 相对于 output.path 路径
+        : 'assets/[name].css', // 相对于 output.path 路径
     }),
 
     // 复制public文件
