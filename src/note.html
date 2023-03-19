@@ -1,0 +1,14 @@
+{% extends "_layout/main.html" %}
+{% import "_layout/blocks.html" as blocks %}
+
+
+{% block body %}
+<div class="block-container">
+  <h1>建站工具</h1>
+ 
+  {% set cfg = ds("/_layout/source/daobox_cfg.toml") %}
+  {% set note = daobox_item(id=__qs.id, config=cfg.daobox) %}
+  <div>{{note.content_html | safe}}</div>
+  
+</div>
+{% endblock body %}

@@ -1,0 +1,27 @@
+{% extends "_layout/main.html" %}
+{% import "_layout/blocks.html" as blocks %}
+
+
+{% block body %}
+<div class="block-container">
+  <h1>建站工具</h1>
+ 
+  {% set page_no =__qs.page | default(value=1) | int %}
+  {% set cfg = ds("/_layout/source/daobox_cfg.toml") %}
+  {% set items = daobox_items(page=page_no, config=cfg.daobox) %}
+  {% for item in items.items %}
+  <li><a href="note.{{item.id}}.html?id={{item.id}}" target="_blank">{{item.title}}</a></li>
+  {% endfor %}
+  
+  {% if page_no == 2 %}
+  <a href="index.html">上一页</a>
+  {% elif page_no > 2 %}
+  <a href="index.p{{page_no-1}}.html?page={{page_no-1}}">上一页</a>
+  {% endif %}
+
+  {% if items.cursor  %}
+    <a href="index.p{{page_no+1}}.html?page={{page_no+1}}">下一页</a>
+  {% endif %}
+
+</div>
+{% endblock body %}
