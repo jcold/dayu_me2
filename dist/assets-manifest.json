@@ -3,14 +3,14 @@
     "main": {
       "assets": {
         "css": [
-          "assets/main.css"
+          "assets/css/main.735d6914.css"
         ],
         "js": [
-          "assets/main.js"
+          "assets/js/main.735d6914.js"
         ]
       }
     }
   },
-  "main.css": "assets/main.css",
-  "main.js": "assets/main.js"
+  "main.css": "assets/css/main.735d6914.css",
+  "main.js": "assets/js/main.735d6914.js"
 }

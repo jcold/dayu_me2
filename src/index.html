@@ -12,7 +12,7 @@
 
     {% set page_no =__qs.page | default(value=1) | int %}
     {% set cfg = ds("/_layout/source/daobox_cfg.toml") %}
-    {% set items = daobox_items(page=page_no, config=cfg.daobox) %}
+    {% set items = daobox_items(page=page_no, limit=5, path_id="NE5QOWH3oHLPbmhq", config=cfg.daobox) %}
     {% for item in items.items %}
     <div class="space-y-2">
         <h2 class="text-2xl"><a class="text-[#005b99] font-medium" href="note.{{item.id}}.html?id={{item.id}}" target="_blank">{{item.title}}</a></h2>
