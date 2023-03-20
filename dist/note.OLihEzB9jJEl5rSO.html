@@ -1,0 +1,76 @@
+
+
+<head>
+    <title>欢迎光临~</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Windows-Target" contect="_top" />
+    
+    
+    <link rel="stylesheet" href="/assets/css/main.949b53f2.css">
+    
+</head>
+
+<body>
+    <div class="body-container text-[#2f353e]">
+        
+
+<div class="block-container space-y-8">
+  <h1 class="text-xl font-bold mt-6 my-font-color">
+    <a href="/">大余之道</a>
+  </h1>
+  
+  
+  
+  <div class="space-y-3">
+    <h2 class="text-4xl font-semibold">内置函数</h2>
+    <div class="text-gray-600">2023-03-11</div>
+  </div>
+  <div class="yb-content2"><h1>range</h1><p>返回指定规格的列表</p><p>参数：</p><ul><li><code>start</code>：可选。默认为0，开始数值</li><li><code>end</code>：必选，结束数字，不包括该数字</li><li><code>step_by</code>：可选，默认1，每次增长步长</li></ul><h1>now</h1><p>返回当前时间，以日期字符串或者时间戳的格式。</p><p>参数：</p><ul><li><code>timestamp</code>：可选，默认假，是否返回时间戳</li><li><code>utc</code>：可选，默认假，是否返回utc时间</li></ul><h1>get_random</h1><p>获取一个随机数，范围<code>[start, end)</code></p><p>参数</p><ul><li><code>start</code>：可选，默认0。最小值</li><li><code>end</code>：最大值，不包括该值。</li></ul><h1>assets</h1><p>输出静态资源引用。该函数依赖模板路径下的<code>assets-manifest.json</code>，该文件通常由webpack插件<span class=""><strong><a href="https://www.npmjs.com/package/webpack-assets-manifest" target="_blank">webpack-assets-manifest</a></strong></span>输出，插件配置如下：</p><pre><code>    new WebpackAssetsManifest({
+      publicPath: true,
+      entrypoints: true,
+      output: &#x27;assets-manifest.json&#x27;,
+    }),</code></pre><p>参数：</p><ul><li><code>type</code>：assets类型。有效值 <code>js</code>或<code>css</code>。</li><li><code>section</code>：入口（entrypoint）名称。</li><li><code>cdn</code>：该资源优先使用的CDN前缀。注意仅当非绝对路径才会附加CDN前缀。</li></ul><h1><span class="">imgsrc</span></h1><p>图片地址输出。本函数转换的图片，在通过<a href="https://www.daobox.cn/sites/" target="_blank">道盒建站</a>打包时自动输出到发布目录。</p><pre><code>{# 显式使用函数 #}
+&lt;img src=&quot;{{ imgsrc(file=&quot;&#x2F;a&#x2F;b&#x2F;logo.png&quot;) }}&quot; &#x2F;&gt;
+
+{# 自动转换以&quot;@&quot;打头格式的地址 #}
+&lt;img src=&quot;@&#x2F;a&#x2F;b&#x2F;logo.png&quot; &#x2F;&gt;</code></pre><h1>t</h1><p>多语言输出。</p><pre><code>&lt;div class=&quot;&quot;&gt;{{ t(&quot;meta description&quot;, memo=&quot;hello world&quot;) }}&lt;&#x2F;div&gt;
+&lt;div class=&quot;&quot;&gt;{{ t(&quot;memo&#x2F;body2 &quot;) }}&lt;&#x2F;div&gt;
+&lt;script&gt;var msg = &quot;hello {{ __T_my name__ }}&quot;;&lt;&#x2F;script&gt;</code></pre><p>语法糖：__T__<em><code>label</code></em>__，多用于js字符串中，label为语言关键字。</p><ul><li>默认参数：语言关键字</li><li><code>memo</code>：注释</li></ul><h1>json</h1><p>将字符串转换为json对象。</p><pre><code>{% for name in json(`[&quot;daobox&quot;, &quot;dayu&quot;,]`) %}
+&lt;div&gt;{{name}}&lt;&#x2F;div&gt;
+{% endfor %}</code></pre><p>其中<code>["daobox", "dayu",]</code>原始为字符串字面量或者变量，通过该函数可转换为json对象，用于输出控制中。</p><h1>ds</h1><p>数据源指定。支持json、yaml、toml格式，加载后自动转换为对象。数据源可以是本地模板目录中文件或者远程Url地址。</p><p>参数：</p><ul><li>默认：数据源地址</li><li><code>format</code>：解析格式，可选。有效值为：json、yaml、toml</li></ul><h1>script</h1><p>Javascript脚本。脚本返回值作为可为普通数据类型或者json对象，正常使用即可。示例如下：</p><pre><code>{% set cpu_js = `
+    function main(name){
+        var arr = name.split(&#x27;-&#x27;)
+        if (arr[3] === &#x27;windows&#x27;){
+            var s = arr[4].match(&#x2F;\d+$&#x2F;)[0]
+            return s ? s+&#x27;位&#x27; : &#x27;&#x27;
+        }
+
+        return arr[4].replace(&#x2F;^\S&#x2F;,function(s){return s.toUpperCase()})
+    }
+    main(name)
+` %}
+    &lt;div class=&quot;flex-shrink-0 pr-8 h-full&quot;&gt;
+        &lt;div class=&quot;bg-blue-600 h-full text-white rounded px-3 py-1&quot;&gt;{{script(cpu_js, name=file.name)}}&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;</code></pre><p>参数：</p><ul><li>默认参数：脚本内容</li><li>其他key=value格式的键值对，作为函数中的全局变量注入。</li></ul></div>
+  
+</div>
+
+
+        
+        <div class="text-sm block-container mt-12 text-gray-500">© 2023, By <a href="https://www.daobox.cn" target="_blank">道盒</a></div>
+        
+    </div>
+    <script async src="/assets/js/main.949b53f2.js"></script>
+</body>
+

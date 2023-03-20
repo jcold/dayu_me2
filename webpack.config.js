@@ -2,9 +2,11 @@ const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
+const {VueLoaderPlugin} = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin')
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -188,6 +190,21 @@ module.exports = {
     noParse: /^(vue|vue-router|vuex|vuex-router-sync|axios)$/,
     rules: [
       {
+        test: /\.vue$/,
+        include: [resolve('./src'), /\/ui\/src\//],
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              transformAssetUrls: {
+                icon: ['data'], // The globally registered tag name, the default is icon
+              },
+            },
+          },
+          conditionalCompiler(),
+        ],
+      },
+      {
         test: /\.tsx?$/,
         use: [
           // 'cache-loader',
@@ -239,7 +256,37 @@ module.exports = {
         // },
         exclude: [/assets\/svg-icon/],
       },
+      {
+        test: /\.svg$/,
+        include: [resolve(config().svgIconDir || './src/assets/svg-icon/')],
+        use: [
+          {
+            loader: '@yzfe/svgicon-loader',
+            options: {
+              svgFilePath: [
+                resolve(config().svgIconDir || './src/assets/svg-icon/'),
+              ],
+              svgoConfig: null, // Custom svgo configuration
+            },
+          },
+        ],
+      },
 
+      {
+        test: /\.worker\.ts$/,
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              inline: 'fallback',
+            },
+          },
+          'ts-loader',
+          conditionalCompiler({
+            notInWorker: false,
+          }),
+        ],
+      },
 
       // end rules
     ],
@@ -283,6 +330,7 @@ module.exports = {
       output: 'assets-manifest.json',
     }),
 
+    new VueLoaderPlugin(),
 
     // 清除上次构建的文件，清除目录是基于output出口目录
     ...(isProd ? [new CleanWebpackPlugin()] : []),
@@ -310,6 +358,14 @@ module.exports = {
       ]
       : []),
 
+    // rust WASM
+    ...(config().wasmNativeDir
+      ? [
+        new WasmPackPlugin({
+          crateDirectory: resolve(config().wasmNativeDir),
+        }),
+      ]
+      : []),
 
     // new ProgressBarPlugin(),
     // new FriendlyErrorsWebpackPlugin(),
@@ -319,6 +375,14 @@ module.exports = {
     // end plugins
   ],
 
+  ...(config().wasmNativeDir
+    ? {
+      experiments: {
+        asyncWebAssembly: true,
+        // importAsync: true,
+      },
+    }
+    : {}),
 }
 
 /**

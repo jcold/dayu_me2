@@ -1,0 +1,111 @@
+
+
+<head>
+    <title>欢迎光临~</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Windows-Target" contect="_top" />
+    
+    
+    <link rel="stylesheet" href="/assets/css/main.949b53f2.css">
+    
+</head>
+
+<body>
+    <div class="body-container text-[#2f353e]">
+        
+
+<div class="block-container space-y-8">
+  <h1 class="text-xl font-bold mt-6 my-font-color">
+    <a href="/">大余之道</a>
+  </h1>
+  
+  
+  
+  <div class="space-y-3">
+    <h2 class="text-4xl font-semibold">内置过滤器</h2>
+    <div class="text-gray-600">2023-03-11</div>
+  </div>
+  <div class="yb-content2"><h1>lower</h1><p>转换字母为小写</p><h1>upper</h1><p>转换字母为大写</p><h1>wordcount</h1><p>输出单词的数量</p><h1>capitalize</h1><p>句子单词首字母大写</p><h1>title</h1><p>每个单词首字母大写</p><h1>replace</h1><p>替换字符串</p><pre><code>{{ name | replace(from=&quot;Robert&quot;, to=&quot;Bob&quot;)}}</code></pre><h1>addslashes</h1><p>引号转换</p><pre><code>{{ set value = &quot;I&#x27;m using Daobox&quot; }}
+{{ value | addslashes }}</code></pre><p>输出<code>I\\'m using Daobox</code></p><h1>slugify</h1><p>转换为可命名的字符串</p><pre><code>{{ set value = &quot;-Hello world! &quot; }}
+{{ value | slugify }}</code></pre><p>输出<code>hello-world</code></p><h1>trim</h1><p>过滤两端空格</p><h1>trim_start</h1><p>过滤左侧空格</p><h1>trim_end</h1><p>过滤右侧空格</p><h1>trim<em>_start_matches</em></h1><p>过滤左侧匹配正则</p><pre><code>{{ set value = &quot;&#x2F;&#x2F;a&#x2F;b&#x2F;c&#x2F;&#x2F;&quot; }}
+{{ value | trim_start_matches(pat=&quot;&#x2F;&#x2F;&quot;) }}</code></pre><p> 输出<code>a/b/c//</code></p><h1>trim<em>_end_matches</em></h1><p>过滤左侧匹配正则</p><pre><code>{{ set value = &quot;&#x2F;&#x2F;a&#x2F;b&#x2F;c&#x2F;&#x2F;&quot; }}
+{{ value | trim_start_matches(pat=&quot;&#x2F;&#x2F;&quot;) }}</code></pre><p> 输出<code>//a/b/c</code></p><h1>truncate</h1><p>截取指定长度的字符串。长度不够则全保留。截取后尾部增加“...”，可以通过<code>end</code>参数修改后缀。</p><pre><code>{{ value | truncate(length=10, end=&quot;&quot;) }}</code></pre><h1>linebreaksbr</h1><p>替换换行符<code>\n</code>, <code>\r\n</code> 为<code><br></code></p><h1>spaceless</h1><p>去除HTML标记内的空格与换行。</p><pre><code>{% set value = &quot;&lt;p&gt;\n&lt;a&gt; &lt;&#x2F;a&gt;\r\n &lt;&#x2F;p&gt;&quot; %}
+{{ value | spaceless }}</code></pre><p>输出：<span class=""><code><p><a></a></p></code></span></p><h1>striptags</h1><p>过滤HTML标记</p><pre><code>{% set value = &quot;&lt;b&gt;Joel&lt;&#x2F;b&gt;&quot; %}
+{{ value | striptags }}</code></pre><p>输出：<span class=""><code>Joel</code></span></p><h1>first</h1><p>返回列表第一个元素，如果列表为空，则返回空字符串。</p><h1>last</h1><p>返回列表最后一个元素，如果列表为空，则返回空字符串。</p><h1>nth</h1><p>返回列表第N（序号从0开始）个元素，如果列表为空，则返回空字符串。</p><pre><code>{{ value | nth(n=2) }}</code></pre><h1>join</h1><p>使用分隔符连接列表中的字符串</p><pre><code>{% set value = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;] %}
+{{ value | join(sep=&quot; &#x2F;&#x2F; &quot;) }}</code></pre><p>输出：<code>a // b // c</code></p><h1>length</h1><p>返回列表、对象、字符串的长度</p><h1>reverse</h1><p>返回逆序排列的字符串或列表</p><h1>sort</h1><p>列表排序。列表中的元素必须是可排序的。</p><ul><li>数字按值大小</li><li>字符串按Asc大小</li><li>列表按其长度</li><li>布尔值，真=1，假=0</li></ul><p>如果列表元素时对象（键值对），可指定排序使用的属性</p><pre><code>{% set people = [
+  {
+    &quot;name&quot;: [&quot;daobox&quot;, &quot;yu&quot;],
+    &quot;age&quot;: 30
+  }
+] %}
+
+{# 按姓名第一个姓氏排序 #}
+{{ people | sort(attribute=&quot;name.0&quot;) }}
+
+{# 按年龄排序 #}
+{{ people | sort(attribute=&quot;age&quot;) }}</code></pre><h1>unique</h1><p>列表去重。用法同sort，当时参考值为字符串，可通过<code>case_sensitive</code>指定是否忽略大小写。</p><pre><code>{{ people | unique(attribute=&quot;age&quot;) }}
+{{ people | unique(attribute=&quot;name.1&quot;, case_sensitive=&quot;true&quot;) }}</code></pre><h1>slice</h1><p>对列表切片。通过参数<code>start</code>，<code>end</code>指定开始与结束索引序号（0开始），返回从start开始（包括）至end结束（不包括）的子列表。两个参数均可省略，默认为两端位置。</p><pre><code>{% for i in my_arr | slice(end=5) %}
+{% for i in my_arr | slice(start=1) %}
+{% for i in my_arr | slice(start=1, end=5) %}</code></pre><p>使用小于0的序号表示从尾部倒数。</p><pre><code>{% set  my_array = [1, 2, 3, 4, 5] %}
+{{  my_arr | slice(end=-2) }} </code></pre><p>结果是：<code>[1, 2, 3]</code></p><h1>group_by</h1><p>对列表分组。指定<code>attribute</code>参数作为分组依据，返回以<code>attribute</code>值为键，对应值为属性相等的列表的对象（键值对）。如果元素缺少分组属性将被忽略。</p><p>如下对象定义（伪代码）</p><pre><code>Author {
+    name: String,
+};
+
+Post {
+    content: String,
+    year: u32,
+    author: Author,
+}
+
+posts=[Post, Post]</code></pre><p>按<code>year</code>分组</p><pre><code>{{ posts | group_by(attribute=&quot;year&quot;) }}</code></pre><p>按<code>authore.name</code>分组</p><pre><code>{% for name, author_posts in posts | group_by(attribute=&quot;author.name&quot;) %}
+    {{ name }}
+    {% for post in author_posts %}
+        {{ post.year }}: {{ post.content }}
+    {% endfor %}
+{% endfor %}</code></pre><p>可以自定义分组</p><pre><code>{% set map = section.pages | group_by(attribute=&quot;year&quot;) %}
+{% set_global years = [] %}
+{% for year, ignored in map %}
+    {% set_global years = years | concat(with=year) %}
+{% endfor %}
+{% for year in years | reverse %}
+    {% set posts = map[year] %}
+{% endfor %}</code></pre><h1>filter</h1><p>过滤列表。仅返回属性等于指定值元素列表。缺少属性或者为空的将忽略。</p><p><code>attribute</code>参数是必须的，<code>value</code>可省略，表示过滤掉属性为空的元素。</p><pre><code>Author {
+    name: String,
+};
+
+Post {
+    content: String,
+    year: u32,
+    author: Author,
+    draft: bool,
+}</code></pre><pre><code>{{ posts | filter(attribute=&quot;draft&quot;, value=true) }}
+{{ posts | filter(attribute=&quot;author.name&quot;, value=&quot;Vincent&quot;) }}</code></pre><h1>map</h1><p>提取每个元素的指定的属性，返回列表。</p><pre><code>Name(String, String);
+
+Person {
+    name: Name,
+    age: u32,
+}</code></pre><p>返回所有的年龄</p><pre><code>{{ people | map(attribute=&quot;age&quot;) }}</code></pre><h1>concat</h1><p>追加一个或一组元素到列表</p><pre><code>{{ posts | concat(with=drafts) }}</code></pre><h1>urlencode</h1><p>转码字符串为安全的人URL编码，根据<a href="https://tools.ietf.org/html/rfc3986" target="_blank">RFC3986</a>，<code>/</code>不参与转码。</p><pre><code>{% set value = &quot;&#x2F;foo?a=b&amp;c=d&quot; %}
+{{ value | urlencode }}</code></pre><p>输出：<span class=""><code>/foo%3Fa%3Db%26c%3Dd</code></span></p><h1>urlencode_strict</h1><p>功能同<code>urlencode</code>，但转码包括<code>/</code>。</p><h1>round</h1><p>浮点数截取。</p><p>参数：</p><ul><li><code>method</code>：取值 <code>ceil</code>（默认），四舍五入； <code>floor</code>截取</li><li><code>precision</code>：小数位数。默认为0</li></ul><h1>filesizeformat</h1><p>整数转换为友好格式。</p><pre><code><span class="">{{ num | filesizeformat }}</span></code></pre><h1>date</h1><p>转化时间戳或者日期到指定日期格式。</p><pre><code>{{ ts | date }} 
+{{ ts | date(format=&quot;%Y-%m-%d %H:%M&quot;) }}</code></pre><p><code>timezone</code>参数可指定，省略时默认为UTC。</p><h1>escape</h1><p>转换特殊字符</p><ul><li><code>&</code> => <code>&amp;</code></li><li><code>&lt;</code> => <code>&lt;</code></li><li><code>></code> => <code>&gt;</code></li><li><code>"</code> => <code>&quot;</code></li><li><code>'</code> => <code>&#x27;</code></li><li><code>/</code> => <code>&#x2F;</code></li></ul><h1>escape_xml</h1><p>转换XML特殊字符</p><ul><li><code>&</code> => <code>&amp;</code></li><li><code>&lt;</code> => <code>&lt;</code></li><li><code>></code> => <code>&gt;</code></li><li><code>"</code> => <code>&quot;</code></li><li><code>'</code> => <code>&#x27;</code></li></ul><h1>safe</h1><p>通常的内容输出，默认会进行HTML特殊字符转码，<code>safe</code>可控制最后的内容不做HTML转码。</p><h1>get</h1><p>通过<code>key</code>取出对象中的值，支持多级。<code>default</code>参数可选，用来指定不存在<code>key</code>时返回的默认值。</p><pre><code>{{ sections | get(key=&quot;posts&#x2F;content&quot;, default=&quot;default&quot;) }}</code></pre><h1>split</h1><p>将字符串按指定的分隔符切割为列表</p><pre><code>{{ path | split(pat=&quot;&#x2F;&quot;) }}</code></pre><h1>int</h1><p>转换值为整数。值可识别前缀<code>0b</code>、<code>0o</code>、<code>0x</code></p><p>参数：</p><ul><li><code>default</code>：可选。转换出错时使用的默认值。</li><li><code>base</code>：可选。整数的位数。有效值为<code>10</code>、<code>2</code>、<code>8</code>、<code>16</code>。</li></ul><h1>float</h1><p>转换为浮点数。可通过<code>default</code>参数指定转换出错时使用的默认值。</p><h1>json_encode</h1><p>转换为标准的json字符串，出于安全原因，道盒建站会自动转换HTML字符，因此可以搭配<code>safe</code>一起使用来禁止转码。</p><pre><code>{{ value | json_encode | safe }}</code></pre><p>参数：</p><ul><li><code>pretty</code>：可选。输出美化后的JSON串。有效值<code>true</code>或<code>false</code></li></ul><pre><code>{{ value | json_encode(pretty=true) | safe }}</code></pre><h1>default</h1><p>对未定义的变量提供默认值。</p><p>注意：仅对未定义的变量有效。对空字符串（<code>""</code>）、<code>0</code>、<code>false</code>无效。</p><pre><code>I would like to read more {{ &quot;&quot; | default (value=&quot;Louise Michel&quot;) }}!</code></pre><p>输出：<code>I would like to read more !</code></p><p></p></div>
+  
+</div>
+
+
+        
+        <div class="text-sm block-container mt-12 text-gray-500">© 2023, By <a href="https://www.daobox.cn" target="_blank">道盒</a></div>
+        
+    </div>
+    <script async src="/assets/js/main.949b53f2.js"></script>
+</body>
+
