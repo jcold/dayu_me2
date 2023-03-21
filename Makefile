@@ -6,7 +6,9 @@ serve:
 		--templates-dir ./src
 
 export-all:
-	@RUST_BACKTRACE=1 daobox-site serve \
+#@RUST_BACKTRACE=1 /Users/dayu/.cargo/bin/daobox-site serve \
+	
+	@RUST_BACKTRACE=1 pnpm daobox serve \
 		--assets-dir ./dist/assets \
 		--assets-prefix / \
 		--dist-dir ./dist \

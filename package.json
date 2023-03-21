@@ -5,6 +5,7 @@
     "dev": "cross-env-file -p $(node build.config/env.js www dev ) webpack --watch --progress",
     "build": "cross-env-file -p $(node build.config/env.js www prod ) webpack",
     "sort-package": "npx sort-package-json",
+    "daobox": "daobox-site",
     "test": "echo test"
   },
   "dependencies": {
@@ -66,6 +67,7 @@
     "cross-env": "^7.0.3",
     "cross-env-file": "^1.0.0",
     "css-loader": "^6.7.1",
+    "daobox-site": "^0.3.1",
     "dayjs": "^1.11.5",
     "deep-diff": "^1.0.2",
     "del": "^7.0.0",
@@ -154,7 +156,6 @@
     "v8-compile-cache": "^2.3.0",
     "vue": "^3.2.37",
     "vue-codemirror": "^6.0.2",
-    "vue-infinite-loading": "git+http://dev.liveio.cn:8700/daobox/vue-infinite-loading.git#next",
     "vue-loader": "^17.0.0",
     "vue-observe-visibility": "2.0.0-alpha.1",
     "vue-resize": "2.0.0-alpha.1",
